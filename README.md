@@ -1,7 +1,5 @@
 # EIP4337 bundler compatibility tests.
 
-For more information on the motivation and importance of having a compatibility test suite, see https://notes.ethereum.org/@yoav/unified-erc-4337-mempool
-
 For the formal schema EIP-4337 bundler RPC API spec, see https://github.com/eth-infinitism/bundler-spec
 
 #### Prerequisites 
@@ -19,6 +17,7 @@ Assuming you already have an Ethereum node running, EntryPoint deployed and your
 ```shell script
 pdm run pytest -rA -W ignore::DeprecationWarning --url <bundler_url> --entry-point <entry_point> --ethereum-node <ethereum_node_url>
 ```
+*You can specify PRIVATE_KEY with env if the node don't have any accounts*
 
 ##### Running with a launcher script
 You can provide a launcher script by adding the option `--launcher-script` to the command:

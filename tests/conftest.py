@@ -51,10 +51,12 @@ def pytest_addoption(parser):
 def w3():
     w3 = Web3(Web3.HTTPProvider(CommandLineArgs.ethereum_node))
     if len(w3.eth.accounts) == 0:
+        from eth_account import Account
+        from web3.middleware import construct_sign_and_send_raw_middleware
         private_key = os.getenv("PRIVATE_KEY") or "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d"
         account = Account.from_key(private_key)
-        w3.eth.accounts[0] = account.address
-        w3.middleware_onion.add(SignAndSendRawMiddlewareBuilder.build(private_key))
+        w3.eth.accounts.append(account.address)
+        w3.middleware_onion.add(construct_sign_and_send_raw_middleware(private_key))
     w3.middleware_onion.inject(geth_poa_middleware, layer=0)
     return w3
 
